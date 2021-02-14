@@ -1,0 +1,14 @@
+These are the results of the execution of your best rotator friend. 
+Date: {{ .Now }}
+
+{{ with.Data }}
+  {{ range . }}
+    Username: {{ .Username }}
+    {{ if .ErrMsg }}
+    Error: {{ .ErrMsg }}
+    {{ else }}
+    {{ if .Rotated }}Key rotation successfully completed{{ end }}
+    {{ end }}
+---------
+  {{ end }}
+{{ end }}
