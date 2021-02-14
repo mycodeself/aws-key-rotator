@@ -8,7 +8,7 @@ import (
 
 type AWSSecretsManagerClientMock struct {
 	DoGetSecretValue func(ctx context.Context, params *awssm.GetSecretValueInput, optFns ...func(*awssm.Options)) (*awssm.GetSecretValueOutput, error)
-	DoUpdateSecret func(ctx context.Context, params *awssm.UpdateSecretInput, optFns ...func(*awssm.Options)) (*awssm.UpdateSecretOutput, error)
+	DoUpdateSecret   func(ctx context.Context, params *awssm.UpdateSecretInput, optFns ...func(*awssm.Options)) (*awssm.UpdateSecretOutput, error)
 }
 
 func (m *AWSSecretsManagerClientMock) GetSecretValue(ctx context.Context, params *awssm.GetSecretValueInput, optFns ...func(*awssm.Options)) (*awssm.GetSecretValueOutput, error) {

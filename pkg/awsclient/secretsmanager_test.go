@@ -16,10 +16,10 @@ func TestGetSecretValue(t *testing.T) {
 		DoGetSecretValue: func(ctx context.Context, params *awssm.GetSecretValueInput, optFns ...func(*awssm.Options)) (*awssm.GetSecretValueOutput, error) {
 			assert.Equal(t, secretId, *params.SecretId)
 
-			return &awssm.GetSecretValueOutput{ SecretString: aws.String("secret")}, nil
+			return &awssm.GetSecretValueOutput{SecretString: aws.String("secret")}, nil
 		},
 	}
-	sm := &SecretsManager{ client: c } 
+	sm := &SecretsManager{client: c}
 
 	_, err := sm.GetSecretValue(context.TODO(), secretId)
 	if err != nil {
@@ -39,7 +39,7 @@ func TestUpdateSecretValue(t *testing.T) {
 			return &awssm.UpdateSecretOutput{}, nil
 		},
 	}
-	sm := &SecretsManager{ client: c } 
+	sm := &SecretsManager{client: c}
 
 	err := sm.UpdateSecretValue(context.TODO(), secretId, value, "")
 	if err != nil {

@@ -10,7 +10,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-
 func TestGetAccessKeysByUsername(t *testing.T) {
 	username := "user"
 
@@ -20,24 +19,24 @@ func TestGetAccessKeysByUsername(t *testing.T) {
 			return &iam.ListAccessKeysOutput{}, nil
 		},
 	}
-	i := &Iam{ client: c }
-	
-	_, err := i.GetAccessKeysByUsername(context.TODO(), username)	
+	i := &Iam{client: c}
+
+	_, err := i.GetAccessKeysByUsername(context.TODO(), username)
 	if err != nil {
 		t.Error(err)
 	}
 }
 
 func TestCreateNewAccessKey(t *testing.T) {
-	username := "user"	
+	username := "user"
 	c := &mock.AWSIamClientMock{
 		DoCreateAccessKey: func(ctx context.Context, params *iam.CreateAccessKeyInput, optFns ...func(*iam.Options)) (*iam.CreateAccessKeyOutput, error) {
 			assert.Equal(t, username, *params.UserName)
 			return &iam.CreateAccessKeyOutput{}, nil
 		},
 	}
-	i := &Iam{ client: c }
-	
+	i := &Iam{client: c}
+
 	_, err := i.CreateNewAccessKey(context.TODO(), username)
 	if err != nil {
 		t.Error(err)
@@ -56,7 +55,7 @@ func TestDeactivateAccessKeyById(t *testing.T) {
 			return &iam.UpdateAccessKeyOutput{}, nil
 		},
 	}
-	i := &Iam{ client: c }
+	i := &Iam{client: c}
 
 	err := i.DeactivateAccessKeyById(context.TODO(), accessKeyId, username)
 	if err != nil {
@@ -75,7 +74,7 @@ func TestDeleteAccessKeyById(t *testing.T) {
 			return &iam.DeleteAccessKeyOutput{}, nil
 		},
 	}
-	i := &Iam{ client: c }
+	i := &Iam{client: c}
 
 	err := i.DeleteAccessKeyById(context.TODO(), accessKeyId, username)
 	if err != nil {

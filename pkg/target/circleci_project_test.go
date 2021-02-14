@@ -20,15 +20,15 @@ func TestCircleciProjectTargetRotate(t *testing.T) {
 	accessKeyId := "ABCDEF123456789"
 	secretAccessKey := "k6Fz8yjggX8tUdMyV9TJykjBrGKYvr9V8mDXE3QE"
 	key := &types.AccessKey{
-		AccessKeyId: &accessKeyId,
+		AccessKeyId:     &accessKeyId,
 		SecretAccessKey: &secretAccessKey,
 	}
-	config := struct{
-		project_slug 				string
-		access_key_id_var_name 		string
-		secret_access_key_var_name	string
+	config := struct {
+		project_slug               string
+		access_key_id_var_name     string
+		secret_access_key_var_name string
 	}{}
-	
+
 	target.circleci.HTTPClient = &mock.HTTPClientDoMock{
 		DoFn: func(req *http.Request) (*http.Response, error) {
 			reqJson := &struct {
