@@ -25,7 +25,7 @@ func main() {
 }
 
 func run(ctx context.Context) error {
-	configPath := flag.String("config", "./config.yaml", "Path to the config file")	
+	configPath := flag.String("config", "./config.yaml", "Path to the config file")
 	flag.Parse()
 
 	c, err := config.LoadFromYamlFile(*configPath)

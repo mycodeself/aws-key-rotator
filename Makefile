@@ -14,9 +14,9 @@ lint:
 	@golangci-lint run
 
 fmt:
-	@echo "==> Running go fmt"
+	@echo "==> Running go fmt..."
 	@find . -name '*.go' | xargs gofmt -s -w
 
 test:
-	@echo "==> Running tests"
+	@echo "==> Running tests..."
 	@go test $(TESTS)
