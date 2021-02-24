@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"os"
 
 	awsconfig "github.com/aws/aws-sdk-go-v2/config"
@@ -24,7 +25,10 @@ func main() {
 }
 
 func run(ctx context.Context) error {
-	c, err := config.LoadFromYamlFile("./config.yaml")
+	configPath := flag.String("config", "./config.yaml", "Path to the config file")	
+	flag.Parse()
+
+	c, err := config.LoadFromYamlFile(*configPath)
 	if err != nil {
 		return errors.Wrap(err, "Error when loading configuration file")
 	}
