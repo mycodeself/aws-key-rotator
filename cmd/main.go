@@ -39,19 +39,19 @@ func run(ctx context.Context) error {
 	}
 
 	// initialize
-	iamClient := awsclient.CreateIamFromConfig(cfg)
-	smClient := awsclient.CreateSecretsManager(cfg)
-	rot := rotator.Create(iamClient)
+	iamClient := awsclient.NewIamFromConfig(cfg)
+	smClient := awsclient.NewSecretsManagerFromConfig(cfg)
+	rot := rotator.NewRotator(iamClient)
 
-	circleClient := circleci.CreateClientFromEnv()
+	circleClient := circleci.NewClientFromEnv()
 	if circleClient != nil {
-		rot.AddRotationTarget("circleci_context", target.CreateCircleciContextTarget(circleClient))
-		rot.AddRotationTarget("circleci_project", target.CreateCircleciProjectTarget(circleClient))
+		rot.AddRotationTarget("circleci_context", target.NewCircleciContextTarget(circleClient))
+		rot.AddRotationTarget("circleci_project", target.NewCircleciProjectTarget(circleClient))
 	}
 
-	rot.AddRotationTarget("aws_secrets_manager_json", target.CreateAwsSecretsManagerJsonTarget(smClient))
+	rot.AddRotationTarget("aws_secrets_manager_json", target.NewAwsSecretsManagerJsonTarget(smClient))
 
-	p := rotator.CreateProcess(c, rot)
+	p := rotator.NewProcess(c, rot)
 	p.Run(ctx)
 
 	return nil

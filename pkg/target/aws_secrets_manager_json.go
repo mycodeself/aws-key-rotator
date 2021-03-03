@@ -20,7 +20,7 @@ type AwsSecretsManagerJsonConfig struct {
 	SecretAccessKeyProperty string `mapstructure:"secret_access_key_property"`
 }
 
-func CreateAwsSecretsManagerJsonTarget(sm *awsclient.SecretsManager) *AwsSecretsManagerJsonTarget {
+func NewAwsSecretsManagerJsonTarget(sm *awsclient.SecretsManager) *AwsSecretsManagerJsonTarget {
 	a := AwsSecretsManagerJsonTarget{
 		sm: sm,
 	}

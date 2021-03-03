@@ -19,7 +19,7 @@ type Iam struct {
 	client AWSIamClient
 }
 
-func CreateIamFromConfig(cfg aws.Config) *Iam {
+func NewIamFromConfig(cfg aws.Config) *Iam {
 
 	c := iam.NewFromConfig(cfg)
 

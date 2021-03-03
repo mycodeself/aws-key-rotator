@@ -12,13 +12,13 @@ A target is a entity that makes use of these credentials and must be updated (of
 
 ## Available targets
 
-#### AWS Secrets Manager
+### AWS Secrets Manager
 
 AWS Secrets Manager targets automatically update a secret stored in AWS Secrets Manager service.
 
 _Note: This uses the default AWS credentials configured in the system, so no extra configuration is needed_
 
-##### AWS Secrets Manager JSON Target
+#### AWS Secrets Manager JSON Target
 
 This target will automatically update a secret stored in AWS Secrets Manager in JSON format. It updates the Access Key Id and Secret Access Key in the specified JSON properties and keeps the rest of the JSON.
 
@@ -34,11 +34,11 @@ aws_iam_users:
           kms_key_id: # (Optional) Specifies an updated ARN or alias of the AWS KMS customer master key
 ```
 
-#### CircleCI
+### CircleCI
 
 Ensure `CIRCLECI_TOKEN` environment variable is present with a valid API token to access the projects or contexts you want to automatically update, see https://circleci.com/docs/2.0/managing-api-tokens/
 
-##### CircleCI Context Target
+#### CircleCI Context Target
 
 ```yaml
 aws_iam_users:
@@ -51,7 +51,7 @@ aws_iam_users:
           secret_access_key_var_name: AWS_SECRET_ACCESS_KEY
 ```
 
-##### CircleCI Project Target
+#### CircleCI Project Target
 
 ```yaml
 aws_iam_users:
@@ -63,3 +63,39 @@ aws_iam_users:
           access_key_id_var_name: AWS_SECRET_KEY_ID
           secret_access_key_var_name: AWS_SECRET_ACCESS_KEY
 ```
+
+## Notifiers
+
+The notifiers are in charge of communicating to you how the key rotation process has gone.
+
+To activate a notifier it is necessary to add it in the configuration file, moreover each notifier needs a different configuration, generally provided through environment variables.
+
+```yaml
+notifiers:
+  - slack
+  - email
+```
+
+### Slack notifier
+
+Send a message via slack to the chosen channel to communicate the results of the rotation process.
+
+It is necessary to create a Slack app with permissions to send messages (`chat:write` under Bot Token Scopes), add this app to the desired workspace and add the app to the channel where it should send notifications.
+
+You can learn more about how to create your own Slack app here https://api.slack.com/start
+
+After you have your app in the channel, just configure the following environment variables:
+
+- `SLACK_TOKEN`: Bot User OAuth Token found under "OAuth & Permissions"
+- `SLACK_CHANNEL`: Channel on which the bot is added and must send messages
+
+### Mail notifier
+
+Sends an e-mail with the results of the key rotation process. The following environment variables need to be set:
+
+- `SMTP_USERNAME`
+- `SMTP_PASSWORD`
+- `SMTP_HOST`
+- `SMTP_PORT`
+- `SMTP_FROM`
+- `SMTP_TO`

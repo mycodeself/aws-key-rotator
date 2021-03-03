@@ -14,7 +14,7 @@ type SMTPClient struct {
 	port string
 }
 
-func Create(username, password, host, port string) *SMTPClient {
+func New(username, password, host, port string) *SMTPClient {
 	c := SMTPClient{
 		host: host,
 		port: port,

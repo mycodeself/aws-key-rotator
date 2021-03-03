@@ -1,4 +1,5 @@
 notifiers:
+  - slack
   - email
 safe_mode: true # doesn't delete the old key, only inactive it. Note: you will need to manually remove the inactive key before next run
 aws_iam_users:

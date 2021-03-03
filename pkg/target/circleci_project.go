@@ -18,7 +18,7 @@ type CircleciProjectTargetConfig struct {
 	SecretAccessKeyVarName string `mapstructure:"secret_access_key_var_name"`
 }
 
-func CreateCircleciProjectTarget(client *circleci.Client) *CircleciProjectTarget {
+func NewCircleciProjectTarget(client *circleci.Client) *CircleciProjectTarget {
 	return &CircleciProjectTarget{
 		circleci: client,
 	}

@@ -1,5 +1,5 @@
 TESTS?=./...
-MAIN=./main.go
+MAIN=./cmd/main.go
 
 run: 
 	@echo "==> Running $(MAIN)..."

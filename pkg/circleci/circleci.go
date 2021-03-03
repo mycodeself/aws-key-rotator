@@ -32,7 +32,7 @@ type APIError struct {
 	Message    string
 }
 
-func CreateClient(apiKey string) *Client {
+func NewClient(apiKey string) *Client {
 	c := &Client{
 		ApiKey:     apiKey,
 		HTTPClient: http.DefaultClient,
@@ -41,14 +41,14 @@ func CreateClient(apiKey string) *Client {
 	return c
 }
 
-func CreateClientFromEnv() *Client {
+func NewClientFromEnv() *Client {
 	apiKey := os.Getenv("CIRCLECI_TOKEN")
 	if len(apiKey) <= 0 {
 		log.Info().Msg("No CircleCI token provided in CIRCLECI_TOKEN env var")
 		return nil
 	}
 
-	return CreateClient(apiKey)
+	return NewClient(apiKey)
 }
 
 func (e *APIError) Error() string {

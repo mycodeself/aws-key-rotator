@@ -16,7 +16,7 @@ type Process struct {
 	notifiers notifier.NotifiersMap
 }
 
-func CreateProcess(config *config.RotationConfig, rotator *Rotator) *Process {
+func NewProcess(config *config.RotationConfig, rotator *Rotator) *Process {
 	p := &Process{
 		config:    config,
 		rotator:   rotator,
@@ -25,7 +25,11 @@ func CreateProcess(config *config.RotationConfig, rotator *Rotator) *Process {
 
 	// setup notifiers
 	if util.StringInSlice("email", config.Notifiers) {
-		p.notifiers["email"] = notifier.CreateMailNotifier("templates/mail_result.txt")
+		p.notifiers["email"] = notifier.NewMailNotifier("templates/mail_result.txt")
+	}
+
+	if util.StringInSlice("slack", config.Notifiers) {
+		p.notifiers["slack"] = notifier.NewSlackNotifierFromEnv()
 	}
 
 	return p

@@ -18,7 +18,7 @@ type CircleciContextTargetConfig struct {
 	SecretAccessKeyVarName string `mapstructure:"secret_access_key_var_name"`
 }
 
-func CreateCircleciContextTarget(client *circleci.Client) *CircleciContextTarget {
+func NewCircleciContextTarget(client *circleci.Client) *CircleciContextTarget {
 	c := CircleciContextTarget{
 		circleci: client,
 	}

@@ -19,7 +19,7 @@ type Rotator struct {
 	rotationTargets target.RotationTargetMap
 }
 
-func Create(iam *awsclient.Iam) *Rotator {
+func NewRotator(iam *awsclient.Iam) *Rotator {
 	r := Rotator{
 		iam:             iam,
 		rotationTargets: make(target.RotationTargetMap),
@@ -41,7 +41,7 @@ func (r *Rotator) RotateAwsUser(ctx context.Context, u *config.AwsIamUser, safeM
 	}
 
 	if len(keys) != 1 {
-		return false, errors.New(fmt.Sprintf("Retrieved %d keys from aws, expected 1 key", len(keys)))
+		return false, errors.New(fmt.Sprintf("Retrieved %d keys from aws, expected 1 key. Keys of user %s have not been rotated", len(keys), u.Username))
 	}
 
 	key := &keys[0]
@@ -51,7 +51,7 @@ func (r *Rotator) RotateAwsUser(ctx context.Context, u *config.AwsIamUser, safeM
 		return false, nil
 	}
 
-	log.Info().Msgf("Rotating key %s", *key.AccessKeyId)
+	log.Info().Msgf("Rotating key %s of user %s", *key.AccessKeyId, u.Username)
 
 	newKey, err := r.iam.CreateNewAccessKey(ctx, u.Username)
 
@@ -59,7 +59,7 @@ func (r *Rotator) RotateAwsUser(ctx context.Context, u *config.AwsIamUser, safeM
 		return false, errors.Wrap(err, fmt.Sprintf("Error when creating new access key for user %s", u.Username))
 	}
 
-	log.Info().Msgf("New access key has been created")
+	log.Info().Msgf("New access key for user %s has been created", u.Username)
 
 	// rotate targets, circleci, aws secrets manager...
 	for _, t := range u.Targets {

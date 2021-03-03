@@ -15,7 +15,7 @@ type MailNotifier struct {
 	from         string
 }
 
-func CreateMailNotifier(templateFile string) *MailNotifier {
+func NewMailNotifier(templateFile string) *MailNotifier {
 	username := os.Getenv("SMTP_USERNAME")
 	password := os.Getenv("SMTP_PASSWORD")
 	host := os.Getenv("SMTP_HOST")
@@ -23,7 +23,7 @@ func CreateMailNotifier(templateFile string) *MailNotifier {
 	from := os.Getenv("SMTP_FROM")
 	port := os.Getenv("SMTP_PORT")
 
-	s := smtp.Create(username, password, host, port)
+	s := smtp.New(username, password, host, port)
 	n := MailNotifier{
 		smtp:         *s,
 		templateFile: templateFile,

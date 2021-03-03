@@ -16,7 +16,7 @@ type SecretsManager struct {
 	client AWSSecretsManagerClient
 }
 
-func CreateSecretsManager(cfg aws.Config) *SecretsManager {
+func NewSecretsManagerFromConfig(cfg aws.Config) *SecretsManager {
 
 	c := awssm.NewFromConfig(cfg)
 
