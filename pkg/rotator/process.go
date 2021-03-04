@@ -42,6 +42,7 @@ func (p *Process) Run(ctx context.Context) {
 	for _, u := range p.config.AwsIamUsers {
 		result := notifier.Result{
 			Username: u.Username,
+			ErrMsg:   "",
 		}
 
 		r, err := p.rotator.RotateAwsUser(ctx, &u, p.config.SafeMode)
@@ -60,7 +61,8 @@ func (p *Process) Run(ctx context.Context) {
 }
 
 func (p *Process) dispatchNotifiers(ctx context.Context, result notifier.ProcessResult) {
-	for _, n := range p.notifiers {
+	for k, n := range p.notifiers {
+		log.Info().Msgf("Sending result with %s notifier", k)
 		err := n.NotifiyResult(ctx, result)
 		if err != nil {
 			log.Error().Msg(err.Error())

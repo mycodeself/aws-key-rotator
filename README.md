@@ -1,5 +1,3 @@
-# under development...
-
 # AWS Key Rotator
 
 AWS Key Rotator is a golang program that helps you with the repetitive task of rotating the credentials of your AWS IAM system accounts.
